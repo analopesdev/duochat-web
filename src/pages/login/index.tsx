@@ -9,10 +9,12 @@ import {
   DropdownMenu,
   DropdownItem,
   User,
+  addToast,
 } from "@heroui/react";
 import { useState } from "react";
 import PenIcon from "../../assets/icons/pen.svg";
 import DuochatLogo from "../../assets/images/duochat-logo.svg";
+import { createUser } from "../../services/userService";
 
 interface User {
   nickname: string;
@@ -35,10 +37,29 @@ export function Login() {
   });
   const [isHovered, setIsHovered] = useState(false);
 
+  const login = async () => {
+    if (user.nickname === "") {
+      addToast({
+        title: "Digite um nickname para entrar",
+        radius: "lg",
+        color: "warning",
+      });
+
+      return;
+    }
+
+    const response = await createUser({
+      nickname: user.nickname,
+      avatar: user.avatar,
+    });
+
+    console.log(response);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <img src={DuochatLogo} alt="Duochat Logo" width={150} height={150} />
-      <Card className="w-full max-w-md bg-transparent mt-10">
+      <Card className="w-full max-w-md bg-transparent mt-8">
         <CardBody className="p-6">
           <Dropdown placement="bottom-start" className="bg-zinc-800">
             <DropdownTrigger>
@@ -105,6 +126,7 @@ export function Login() {
               label="Nickname"
               placeholder="Digite seu nickname"
               variant="bordered"
+              value={user.nickname}
               onChange={(e) => {
                 setUser((prev) => ({
                   ...prev,
@@ -113,7 +135,13 @@ export function Login() {
               }}
             />
 
-            <Button color="primary" className="w-full" size="lg">
+            <Button
+              color="primary"
+              className="w-full"
+              size="lg"
+              onPress={login}
+              type="submit"
+            >
               Entrar
             </Button>
           </div>
