@@ -33,11 +33,11 @@ export function Login() {
 
   const [user, setUser] = useState<User>({
     nickname: avatarsNames[0],
-    avatar: `https://api.dicebear.com/9.x/adventurer/svg?seed=${avatarsNames[0]}`,
+    avatar: getUrlAvatar(avatarsNames[0]),
   });
   const [isHovered, setIsHovered] = useState(false);
 
-  const login = async () => {
+  async function login() {
     if (user.nickname === "") {
       addToast({
         title: "Digite um nickname para entrar",
@@ -54,7 +54,11 @@ export function Login() {
     });
 
     console.log(response);
-  };
+  }
+
+  function getUrlAvatar(nickname: string) {
+    return `https://api.dicebear.com/9.x/adventurer/svg?seed=${nickname}`;
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -104,7 +108,7 @@ export function Login() {
                   onClick={() =>
                     setUser({
                       nickname: name,
-                      avatar: `https://api.dicebear.com/9.x/adventurer/svg?seed=${name}`,
+                      avatar: getUrlAvatar(name),
                     })
                   }
                 >
@@ -112,7 +116,7 @@ export function Login() {
                     <Avatar
                       className="w-12 h-12"
                       name={name}
-                      src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${name}`}
+                      src={getUrlAvatar(name)}
                     />
                     <p className="font-bold text-white">{name}</p>
                   </div>
