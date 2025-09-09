@@ -8,9 +8,10 @@ export const createUser = async ({
   avatar: string;
 }) => {
   const response = await axiosInstance.post("/users", {
+    withCredentials: true,
     nickname,
     avatar,
   });
 
-  return response.data;
+  return response;
 };

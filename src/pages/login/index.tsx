@@ -15,6 +15,7 @@ import { useState } from "react";
 import PenIcon from "../../assets/icons/pen.svg";
 import DuochatLogo from "../../assets/images/duochat-logo.svg";
 import { createUser } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   nickname: string;
@@ -36,8 +37,9 @@ export function Login() {
     avatar: getUrlAvatar(avatarsNames[0]),
   });
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
-  async function login() {
+  const login = async () => {
     if (user.nickname === "") {
       addToast({
         title: "Digite um nickname para entrar",
@@ -53,19 +55,24 @@ export function Login() {
       avatar: user.avatar,
     });
 
-    console.log(response);
-  }
+    if (response.status === 200) {
+      navigate("/rooms");
+    }
+  };
 
   function getUrlAvatar(nickname: string) {
     return `https://api.dicebear.com/9.x/adventurer/svg?seed=${nickname}`;
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <img src={DuochatLogo} alt="Duochat Logo" width={150} height={150} />
-      <Card className="w-full max-w-md bg-transparent mt-8">
+      <Card className="w-full max-w-md mt-8 bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl">
         <CardBody className="p-6">
-          <Dropdown placement="bottom-start" className="bg-zinc-800">
+          <Dropdown
+            placement="bottom-start"
+            className="bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl"
+          >
             <DropdownTrigger>
               <div className="flex items-center justify-center gap-4">
                 <div
@@ -104,7 +111,7 @@ export function Login() {
               {avatarsNames.map((name) => (
                 <DropdownItem
                   key={name}
-                  className=" gap-2 flex cursor-pointer"
+                  className="gap-2 flex cursor-pointer"
                   onClick={() =>
                     setUser({
                       nickname: name,
