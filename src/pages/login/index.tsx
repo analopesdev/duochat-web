@@ -67,7 +67,7 @@ export function Login() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <img src={DuochatLogo} alt="Duochat Logo" width={150} height={150} />
-      <Card className="w-full max-w-[400px] mt-8 bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl">
+      <Card className="w-full max-w-[400px] mt-8 bg-gradient-to-br from-white/1 to-white/12 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl">
         <CardBody className="p-6">
           <Dropdown
             placement="bottom-start"
@@ -100,9 +100,8 @@ export function Login() {
 
                 <div className="flex flex-col">
                   <h1 className="text-white font-bold text-lg">
-                    {user.nickname}
+                    {`@${user.nickname}`}
                   </h1>
-                  <span className="text-white text-sm">{`@${user.nickname}`}</span>
                 </div>
               </div>
             </DropdownTrigger>
