@@ -1,6 +1,8 @@
 import { heroui } from "@heroui/theme";
 
 export default heroui({
+  defaultTheme: "dark",
+  defaultExtendTheme: "dark",
   layout: {
     disabledOpacity: "0.3",
   },

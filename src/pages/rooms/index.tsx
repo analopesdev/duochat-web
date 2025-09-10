@@ -1,45 +1,119 @@
-import { Card, CardHeader, Image, CardFooter, Button } from "@heroui/react";
+import {
+  Card,
+  CardHeader,
+  Image,
+  CardFooter,
+  Button,
+  AvatarGroup,
+  Avatar,
+} from "@heroui/react";
+import { useState } from "react";
+import CreateRoomDialog from "./components/create_room_dialog";
 
 export function Rooms() {
+  const [openDialog, setOpenDialog] = useState(false);
+
   return (
-    <div>
-      <Card
-        isFooterBlurred
-        className="w-full h-[300px] col-span-12 sm:col-span-7"
-      >
-        <CardHeader className="absolute z-10 top-1 flex-col items-start">
-          <p className="text-tiny text-white/60 uppercase font-bold">
-            Your day your way
-          </p>
-          <h4 className="text-white/90 font-medium text-xl">
-            Your checklist for better sleep
-          </h4>
-        </CardHeader>
-        <Image
-          removeWrapper
-          alt="Relaxing app background"
-          className="z-0 w-full h-full object-cover"
-          src="https://heroui.com/images/card-example-5.jpeg"
-        />
-        <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-          <div className="flex grow gap-2 items-center">
-            <Image
-              alt="Breathing app icon"
-              className="rounded-full w-10 h-11 bg-black"
-              src="https://heroui.com/images/breathing-app-icon.jpeg"
-            />
-            <div className="flex flex-col">
-              <p className="text-tiny text-white/60">Breathing App</p>
-              <p className="text-tiny text-white/60">
-                Get a good night&#39;s sleep.
-              </p>
+    <div className="flex-col w-full mx-auto gap-4 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Rooms</h1>
+        <Button
+          color="primary"
+          onPress={() => {
+            setOpenDialog(true);
+          }}
+        >
+          Create Room
+        </Button>
+      </div>
+
+      <div className="flex gap-4">
+        <Card
+          isFooterBlurred
+          className="w-1/2 h-[150px] bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl"
+        >
+          <CardHeader className="mt-2">
+            <AvatarGroup>
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Riley" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Jocelyn" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Christopher" />
+            </AvatarGroup>
+          </CardHeader>
+          <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_25px)] shadow-small mx-3 mb-3 z-10">
+            <div className="flex grow gap-2 items-center">
+              <div className="flex flex-col">
+                <h1 className="text-white/60 font-bold">Breathing App</h1>
+                <p className="text-tiny text-white/60">
+                  Get a good night&#39;s sleep.
+                </p>
+              </div>
             </div>
-          </div>
-          <Button radius="full" size="sm">
-            Get App
-          </Button>
-        </CardFooter>
-      </Card>
+            <Button radius="full" color="primary" size="sm">
+              Enter Room
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card
+          isFooterBlurred
+          className="w-1/2 h-[150px] bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl"
+        >
+          <CardHeader className="mt-2">
+            <AvatarGroup>
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Riley" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Jocelyn" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Christopher" />
+            </AvatarGroup>
+          </CardHeader>
+          <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_25px)] shadow-small mx-3 mb-3 z-10">
+            <div className="flex grow gap-2 items-center">
+              <div className="flex flex-col">
+                <h1 className="text-white/60 font-bold">Breathing App</h1>
+                <p className="text-tiny text-white/60">
+                  Get a good night&#39;s sleep.
+                </p>
+              </div>
+            </div>
+            <Button radius="full" color="primary" size="sm">
+              Enter Room
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card
+          isFooterBlurred
+          className="w-1/2 h-[150px] bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl"
+        >
+          <CardHeader className="mt-2">
+            <AvatarGroup>
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Riley" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Jocelyn" />
+              <Avatar src="https://api.dicebear.com/9.x/adventurer/svg?seed=Christopher" />
+            </AvatarGroup>
+          </CardHeader>
+          <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_25px)] shadow-small mx-3 mb-3 z-10">
+            <div className="flex grow gap-2 items-center">
+              <div className="flex flex-col">
+                <h1 className="text-white/60 font-bold">Breathing App</h1>
+                <p className="text-tiny text-white/60">
+                  Get a good night&#39;s sleep.
+                </p>
+              </div>
+            </div>
+            <Button radius="full" color="primary" size="sm">
+              Enter Room
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+
+      <CreateRoomDialog
+        openDialog={openDialog}
+        closeDialog={() => setOpenDialog(false)}
+      />
     </div>
   );
 }

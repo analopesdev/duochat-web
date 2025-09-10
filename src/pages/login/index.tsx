@@ -67,14 +67,14 @@ export function Login() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <img src={DuochatLogo} alt="Duochat Logo" width={150} height={150} />
-      <Card className="w-full max-w-md mt-8 bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl">
+      <Card className="w-full max-w-[400px] mt-8 bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl">
         <CardBody className="p-6">
           <Dropdown
             placement="bottom-start"
             className="bg-gradient-to-br from-white/1 to-white/8 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl"
           >
             <DropdownTrigger>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex flex-col items-center justify-center gap-2">
                 <div
                   className="relative"
                   onMouseEnter={() => {
@@ -93,8 +93,7 @@ export function Login() {
                   )}
                   <Avatar
                     isBordered
-                    color="primary"
-                    className="w-16 h-16 transition-transform cursor-pointer"
+                    className="w-14 h-14 transition-transform cursor-pointer"
                     src={user.avatar}
                   />
                 </div>

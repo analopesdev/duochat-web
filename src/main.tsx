@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HeroUIProvider>
       <ToastProvider placement="bottom-center" />
-      <main className="dark text-foreground bg-background bg-zinc-900 h-screen">
+      <main className="dark text-foreground bg-background bg-zinc-900 h-screen ">
         <RouterProvider router={router} />
       </main>
     </HeroUIProvider>
