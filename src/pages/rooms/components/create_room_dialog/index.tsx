@@ -8,8 +8,10 @@ import {
   useDisclosure,
   Input,
   Checkbox,
+  addToast,
 } from "@heroui/react";
 import { useState } from "react";
+import { createRoom } from "../../../../services/roomService";
 
 interface CreateRoomDialogProps {
   openDialog: boolean;
@@ -28,6 +30,7 @@ export default function CreateRoomDialog({
   const [description, setDescription] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [password, setPassword] = useState("");
+  const [maxUsers, setMaxUsers] = useState<number>(10);
 
   const onOpenChangeDialog = (isOpen: boolean) => {
     if (!isOpen) {
@@ -35,8 +38,25 @@ export default function CreateRoomDialog({
     }
   };
 
-  const onCreateRoom = () => {
-    console.log("onCreateRoom");
+  const onCreateRoom = async () => {
+    const room = {
+      name,
+      description,
+      isPrivate,
+      password: isPrivate ? password : null,
+      maxUsers,
+    };
+
+    const response = await createRoom(room);
+
+    if (response) {
+      addToast({
+        title: "Room created successfully",
+        description: "Room created successfully",
+        color: "success",
+      });
+      closeDialog();
+    }
   };
 
   return (
@@ -74,17 +94,22 @@ export default function CreateRoomDialog({
             </ModalHeader>
             <ModalBody>
               <Input
-                label="Room Name"
-                placeholder="Enter Room Name"
+                label="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <Input
-                label="Room Description"
-                placeholder="Enter Room Description"
+                label="Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
+
+              <Input
+                label="Max Users"
+                type="number"
+                onChange={(e) => setMaxUsers(Number(e.target.value))}
+              />
+
               <Checkbox
                 isSelected={isPrivate}
                 onValueChange={(e) => setIsPrivate(e)}
@@ -94,8 +119,7 @@ export default function CreateRoomDialog({
 
               {isPrivate && (
                 <Input
-                  label="Room Password"
-                  placeholder="Enter Room Password"
+                  label="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"

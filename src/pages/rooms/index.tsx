@@ -1,17 +1,28 @@
 import {
   Card,
   CardHeader,
-  Image,
   CardFooter,
   Button,
   AvatarGroup,
   Avatar,
 } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateRoomDialog from "./components/create_room_dialog";
+import { getRooms, type Room } from "../../services/roomService";
 
 export function Rooms() {
   const [openDialog, setOpenDialog] = useState(false);
+  const [rooms, setRooms] = useState<Room[]>([]);
+
+  const fetchRooms = async () => {
+    const response = await getRooms();
+    console.log(response);
+    setRooms(response);
+  };
+
+  useEffect(() => {
+    fetchRooms();
+  }, []);
 
   return (
     <div className="flex-col w-full mx-auto gap-4 p-6">
