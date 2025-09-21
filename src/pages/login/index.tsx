@@ -16,6 +16,7 @@ import PenIcon from "../../assets/icons/pen.svg";
 import DuochatLogo from "../../assets/images/duochat-logo.svg";
 import { createUser } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
+import type { AxiosError } from "axios";
 
 interface User {
   nickname: string;
@@ -33,16 +34,19 @@ export function Login() {
   ];
 
   const [user, setUser] = useState<User>({
-    nickname: avatarsNames[0],
+    nickname: "",
     avatar: getUrlAvatar(avatarsNames[0]),
   });
+
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const login = async () => {
-    if (user.nickname === "") {
+    if (user.nickname === "" || user.nickname.length < 3) {
       addToast({
-        title: "Digite um nickname para entrar",
+        title: "Digite um nickname válido (mínimo 3 caracteres)",
         radius: "lg",
         color: "warning",
       });
@@ -53,15 +57,38 @@ export function Login() {
     const response = await createUser({
       nickname: user.nickname,
       avatar: user.avatar,
+    }).catch((err: AxiosError) => {
+      if (err.status === 409) {
+        setIsInvalid(true);
+        setErrorMessage("Nickname already exists");
+      } else {
+        addToast({
+          title: "Erro ao criar usuário",
+          radius: "lg",
+          color: "warning",
+        });
+      }
     });
 
-    if (response.status === 200) {
+    if (response) {
       navigate("/rooms");
     }
   };
 
   function getUrlAvatar(nickname: string) {
     return `https://api.dicebear.com/9.x/adventurer/svg?seed=${nickname}`;
+  }
+
+  function handleNicknameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    const nicknameRegex = /^[a-zA-Z0-9_]*$/;
+
+    if (nicknameRegex.test(value) && value.length <= 16) {
+      setUser((prev) => ({
+        ...prev,
+        nickname: value,
+      }));
+    }
   }
 
   return (
@@ -99,9 +126,15 @@ export function Login() {
                 </div>
 
                 <div className="flex flex-col">
-                  <h1 className="text-white font-bold text-lg">
-                    {`@${user.nickname}`}
-                  </h1>
+                  {user.nickname ? (
+                    <h1 className="text-white font-bold text-lg">
+                      {`@${user.nickname}`}
+                    </h1>
+                  ) : (
+                    <h1 className="text-gray-500 font-bold text-lg">
+                      {`@nickname`}
+                    </h1>
+                  )}
                 </div>
               </div>
             </DropdownTrigger>
@@ -110,6 +143,7 @@ export function Login() {
                 <DropdownItem
                   key={name}
                   className="gap-2 flex cursor-pointer"
+                  textValue={name}
                   onClick={() =>
                     setUser({
                       nickname: name,
@@ -133,15 +167,12 @@ export function Login() {
           <div className="space-y-4 mt-6">
             <Input
               label="Nickname"
-              placeholder="Digite seu nickname"
+              placeholder="Example: john_doe"
               variant="bordered"
               value={user.nickname}
-              onChange={(e) => {
-                setUser((prev) => ({
-                  ...prev,
-                  nickname: e.target.value,
-                }));
-              }}
+              errorMessage={errorMessage}
+              isInvalid={isInvalid}
+              onChange={handleNicknameChange}
             />
 
             <Button
